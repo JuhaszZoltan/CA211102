@@ -9,9 +9,62 @@ namespace CA211102
     class Program
     {
         static List<Ember> emberek = new List<Ember>();
-        static void Main(string[] args)
+        static void Main()
         {
             InitEmberek();
+
+            //Összegzés
+            //pl: listában lévők összsúlya:
+            float res_01 = emberek.Sum(x => x.Suly);
+
+            //Átlag
+            //pl: átlagos magasság:
+            double res_02 = emberek.Average(x => x.Magassag);
+
+            //Megszámlálás
+            //pl. verebélyesek száma:
+            int res_03 = emberek.Count(x => x.Iskola == "Verebély");
+
+            //Minimum/Maximum érték
+            //legkisebb magasság:
+            int res_04 = emberek.Min(x => x.Magassag);
+            //legnagyobb súly
+            float res_05 = emberek.Max(x => x.Suly);
+
+            //Első/Utolsó <T>-nek megfelelő elem
+            //pl: első UMSZKIs
+            //ha nincs ilyen elem, akkor exception
+            Ember res_06 = emberek.First(x => x.Iskola == "UMSzKI");
+            //ha nincs ilyen elem akkor a res null:
+            Ember res_16 = emberek.FirstOrDefault(x => x.Iskola == "UMSzKI");
+
+            //pl: utolsó 180cmnél alacsonyabb
+            Ember res_07 = emberek.Last(x => x.Magassag < 180);
+            Ember res_17 = emberek.LastOrDefault(x => x.Magassag < 180);
+
+            //<T>nek megfelelők listája
+            //pl: összes verebélyes
+            IEnumerable<Ember> res_08 = emberek.Where(x => x.Iskola == "Verebély");
+            //ha ebből szeretnék egy "normál" listát:
+            List<Ember> res_09 = res_08.ToList();
+
+            //"csak" adott tulajdonságok listája
+            IEnumerable<string> res_10 = emberek.Select(x => x.Nev);
+            //ezt is lehet listává alakítani:
+            List<string> res_11 = res_10.ToList();
+
+            //Rendezés
+            //születési dátum szerint növekvőbe:
+            IOrderedEnumerable<Ember> res_12 = emberek.OrderBy(x => x.Szul);
+            //súly szerint csökkenőbe:
+            IOrderedEnumerable<Ember> res_13 = emberek.OrderByDescending(x => x.Suly);
+
+            //Tartalmaz <T>?
+            bool res_14 = emberek.Any(x => x.Nev == "Kiss Pista");
+
+            //csoportosítás
+            IEnumerable<IGrouping<string, Ember>> res_15 = emberek.GroupBy(x => x.Iskola);
+
             Console.ReadKey(true);
         }
 
